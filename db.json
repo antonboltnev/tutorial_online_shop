@@ -25,7 +25,7 @@
       "image": "4.jpg",
       "name": "T-shirt 4",
       "price": 300,
-      "article": "T3",
+      "article": "T4",
       "available": true
     },
     {
@@ -36,10 +36,10 @@
       "available": false
     },
     {
-      "image": "6.jpg",
+      "image": "6.jpeg",
       "name": "T-shirt 6",
       "price": 700,
-      "article": "T7",
+      "article": "T6",
       "available": true
     }
   ]
