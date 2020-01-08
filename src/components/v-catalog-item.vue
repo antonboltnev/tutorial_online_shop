@@ -5,7 +5,7 @@
     <p class="v-catalog-item__price">Price: {{product_data.price}} Р.</p>
     <button
         class="v-catalog-item__add_to_cart_btn btn"
-        @click="sendDataToParent"
+        @click="addToCart"
     >Add to cart
     </button>
   </div>
@@ -27,10 +27,10 @@
     },
     computed: {},
     methods: {
-      sendDataToParent() {
-        this.$emit('sendDataToParent', this.product_data.article)
+      addToCart() {
+        this.$emit('addToCart',this.product_data);
       }
-    }
+    },
   }
 </script>
 
