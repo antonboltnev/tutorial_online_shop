@@ -8,7 +8,7 @@
     </div>
     <div class="v-cart-item__quantity">
       <p>Qty:</p>
-      <span>
+      <span class="quantity__tools">
         <span class="quantity__btn" @click="decrementItem">-</span>
         {{cart_item_data.quantity}}
         <span class="quantity__btn" @click="incrementItem">+</span>
@@ -66,6 +66,10 @@
 
     .quantity__btn {
       cursor: pointer;
+    }
+
+    .quantity__tools {
+      user-select: none;
     }
   }
 </style>

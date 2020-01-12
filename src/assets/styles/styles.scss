@@ -6,4 +6,9 @@
   color: #ffffff;
   border: 0;
   border-radius: $radius;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background: $green-bg-hover;
+  }
 }

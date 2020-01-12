@@ -65,11 +65,12 @@
       align-items: center;
     }
     &__link_to_cart {
-      position: absolute;
+      position: fixed;
       top: 10px;
       right: 10px;
       padding: $padding*2;
       border: solid 1px #aeaeae;
+      background: #ffffff;
     }
   }
 </style>
