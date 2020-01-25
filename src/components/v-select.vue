@@ -6,7 +6,7 @@
     >{{selected}}</p>
     <div
         class="options"
-        v-if="areOptionsVisible"
+        v-if="areOptionsVisible || isExpanded"
     >
       <p
           v-for="option in options"
@@ -32,6 +32,10 @@
       selected: {
         type: String,
         default: ''
+      },
+      isExpanded: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
