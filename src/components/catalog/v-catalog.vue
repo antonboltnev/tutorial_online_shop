@@ -4,12 +4,35 @@
       <div class="v-catalog__link_to_cart">Cart: {{CART.length}}</div>
     </router-link>
     <h1>Catalog</h1>
-    <v-select
-        :selected="selected"
-        :options="categories"
-        @select="sortByCategories"
-        :isExpanded="IS_DESKTOP"
-    />
+    <div class="filters">
+      <v-select
+          :selected="selected"
+          :options="categories"
+          @select="sortByCategories"
+      />
+      <div class="range-slider">
+        <input
+            type="range"
+            min="0"
+            max="1000"
+            step="10"
+            v-model.number="minPrice"
+            @change="setRangeSlider"
+        >
+        <input
+            type="range"
+            min="0"
+            max="1000"
+            step="10"
+            v-model.number="maxPrice"
+            @change="setRangeSlider"
+        >
+      </div>
+      <div class="range-values">
+        <p>Min: {{minPrice}}</p>
+        <p>Max: {{maxPrice}}</p>
+      </div>
+    </div>
     <div class="v-catalog__list">
       <v-catalog-item
           v-for="product in filteredProducts"
@@ -41,7 +64,9 @@
           {name: 'Женские', value: 'ж'},
         ],
         selected: 'Все',
-        sortedProducts: []
+        sortedProducts: [],
+        minPrice: 0,
+        maxPrice: 1000
       }
     },
     computed: {
@@ -64,15 +89,26 @@
         'GET_PRODUCTS_FROM_API',
         'ADD_TO_CART'
       ]),
+      setRangeSlider() {
+        if (this.minPrice > this.maxPrice) {
+          let tmp = this.maxPrice;
+          this.maxPrice = this.minPrice;
+          this.minPrice = tmp;
+        }
+        this.sortByCategories()
+      },
       sortByCategories(category) {
-        this.sortedProducts = [];
         let vm = this;
-        this.PRODUCTS.map(function (item) {
-          if (item.category === category.name) {
-            vm.sortedProducts.push(item);
-          }
+        this.sortedProducts = [...this.PRODUCTS]
+        this.sortedProducts = this.sortedProducts.filter(function (item) {
+          return item.price >= vm.minPrice && item.price <= vm.maxPrice
         })
-        this.selected = category.name
+        if (category) {
+          this.sortedProducts = this.sortedProducts.filter(function (e) {
+            vm.selected === category.name;
+            return e.category === category.name
+          })
+        }
       },
       addToCart(data) {
         this.ADD_TO_CART(data)
@@ -80,11 +116,12 @@
     },
     mounted() {
       this.GET_PRODUCTS_FROM_API()
-      .then((response) => {
-        if (response.data) {
-          console.log('Data arrived!')
-        }
-      })
+        .then((response) => {
+          if (response.data) {
+            console.log('Data arrived!')
+            this.sortByCategories()
+          }
+        })
     }
   }
 </script>
@@ -97,6 +134,7 @@
       justify-content: space-between;
       align-items: center;
     }
+
     &__link_to_cart {
       position: fixed;
       top: 10px;
@@ -109,11 +147,10 @@
 
   .filters {
     display: flex;
+    justify-content: space-between;
     align-items: center;
   }
 
-
-  /* Styles for range slider */
   .range-slider {
     width: 200px;
     margin: auto 16px;
@@ -121,56 +158,16 @@
     position: relative;
   }
 
-  .slider_inputs__wrap {
-    display: flex;
-    align-items: center;
-  }
-  .range-slider svg,
-  .range-slider input[type=range] {
+  .range-slider svg, .range-slider input[type=range] {
     position: absolute;
     left: 0;
     bottom: 0;
   }
 
-  input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-  }
-  input[type=range]:focus {
-    outline: none;
-  }
-  input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #e7e7e7;
-  }
-  input[type=range]:focus::-ms-fill-lower {
-    background: #ffffff;
-  }
-  input[type=range]:focus::-ms-fill-upper {
-    background: #ffffff;
-  }
-  input[type=range]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    cursor: pointer;
-    animate: 0.2s;
-    background: #e7e7e7;
-    border-radius: 1px;
-    box-shadow: none;
-    border: 0;
-  }
   input[type=range]::-webkit-slider-thumb {
     z-index: 2;
     position: relative;
-    top: -3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-    border: 1px solid #ffffff;
-    height: 22px;
-    width: 22px;
-    border-radius: 25px;
-    background: #e7e7e7;
-    cursor: pointer;
-    -webkit-appearance: none;
-    outline: none;
+    top: 2px;
     margin-top: -7px;
   }
 </style>
