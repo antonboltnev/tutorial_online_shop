@@ -26,6 +26,7 @@
     >
       Show info
     </button>
+    <br>
     <button
         class="v-catalog-item__add_to_cart_btn btn"
         @click="addToCart"
