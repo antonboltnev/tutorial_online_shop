@@ -28,7 +28,7 @@
         <input
             type="range"
             min="0"
-            max="1000"
+            max="10000"
             step="10"
             v-model.number="maxPrice"
             @change="setRangeSlider"
@@ -74,7 +74,7 @@
         selected: 'Все',
         sortedProducts: [],
         minPrice: 0,
-        maxPrice: 1000,
+        maxPrice: 10000,
         messages: []
       }
     },
@@ -83,7 +83,8 @@
         'PRODUCTS',
         'CART',
         'IS_MOBILE',
-        'IS_DESKTOP'
+        'IS_DESKTOP',
+        'SEARCH_VALUE'
       ]),
       filteredProducts() {
         if (this.sortedProducts.length) {
@@ -127,6 +128,20 @@
             { name: 'Товар добавлен в корзину', icon: 'check_circle', id: timeStamp }
           )
         })
+      },
+      sortProductsBySearchValue(value) {
+        if (value) {
+          this.sortedProducts = this.sortedProducts.filter(function (item) {
+            return item.name.toLowerCase().includes(value.toLowerCase())
+          })
+        } else {
+          this.sortedProducts = this.PRODUCTS;
+        }
+      }
+    },
+    watch: {
+      SEARCH_VALUE() {
+        this.sortProductsBySearchValue(this.SEARCH_VALUE);
       }
     },
     mounted() {
@@ -152,7 +167,7 @@
 
     &__link_to_cart {
       position: fixed;
-      top: 10px;
+      top: 80px;
       right: 10px;
       padding: $padding*2;
       border: solid 1px #aeaeae;
