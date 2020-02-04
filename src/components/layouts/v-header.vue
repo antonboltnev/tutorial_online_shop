@@ -12,7 +12,7 @@
         <i class="material-icons" @click="search(searchValue)">search</i>
       </button>
       <button class="search_btn">
-        <i class="material-icons" @click="clearSearchFiled">clear</i>
+        <i class="material-icons" @click="clearSearchField">cancel</i>
       </button>
     </div>
   </div>
@@ -44,8 +44,8 @@
           this.$router.push('/catalog')
         }
       },
-      clearSearchFiled() {
-        this.searchValue = '';
+      clearSearchField() {
+        this.searchValue = ''
         this.GET_SEARCH_VALUE_TO_VUEX();
         if (this.$route.path !== '/catalog') {
           this.$router.push('/catalog')

@@ -122,14 +122,15 @@
       },
       addToCart(data) {
         this.ADD_TO_CART(data)
-        .then(() => {
-          let timeStamp = Date.now().toLocaleString();
-          this.messages.unshift(
-            { name: 'Товар добавлен в корзину', icon: 'check_circle', id: timeStamp }
-          )
-        })
+          .then(() => {
+            let timeStamp = Date.now().toLocaleString();
+            this.messages.unshift(
+              {name: 'Товар добавлен в корзину', icon: 'check_circle', id: timeStamp}
+            )
+          })
       },
       sortProductsBySearchValue(value) {
+        this.sortedProducts = [...this.PRODUCTS]
         if (value) {
           this.sortedProducts = this.sortedProducts.filter(function (item) {
             return item.name.toLowerCase().includes(value.toLowerCase())
@@ -148,8 +149,8 @@
       this.GET_PRODUCTS_FROM_API()
         .then((response) => {
           if (response.data) {
-            console.log('Data arrived!')
             this.sortByCategories()
+            this.sortProductsBySearchValue(this.SEARCH_VALUE)
           }
         })
     }
