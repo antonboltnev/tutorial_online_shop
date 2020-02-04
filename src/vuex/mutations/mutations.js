@@ -11,8 +11,8 @@ export default  {
     state.products = products;
   },
   SET_CART: (state, product) => {
+    let isProductExists = false;
     if (state.cart.length) {
-      let isProductExists = false;
       state.cart.map(function (item) {
         if (item.article === product.article) {
           isProductExists = true;

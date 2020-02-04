@@ -51,9 +51,6 @@ import formattedPrice from "../../filters/price-format";
       deleteFromCart() {
         this.$emit('deleteFromCart')
       }
-    },
-    mounted() {
-      this.$set(this.cart_item_data, 'quantity', 1)
     }
   }
 </script>
