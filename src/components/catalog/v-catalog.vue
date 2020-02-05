@@ -45,6 +45,7 @@
           :key="product.article"
           :product_data="product"
           @addToCart="addToCart"
+          @productClick="productClick"
       />
     </div>
   </div>
@@ -99,6 +100,9 @@
         'GET_PRODUCTS_FROM_API',
         'ADD_TO_CART'
       ]),
+      productClick(article) {
+        this.$router.push( {name: 'product', query: { 'product': article }})
+      },
       setRangeSlider() {
         if (this.minPrice > this.maxPrice) {
           let tmp = this.maxPrice;
