@@ -35,7 +35,7 @@
       product() {
         let result = {}
         let vm = this;
-        this.PRODUCTS.map(function (item) {
+        this.PRODUCTS.find(function (item) {
           if (item.article === vm.$route.query.product) {
             result = item;
           }
@@ -53,7 +53,9 @@
       },
     },
     mounted() {
-      this.GET_PRODUCTS_FROM_API()
+      if (!this.PRODUCTS.length) {
+        this.GET_PRODUCTS_FROM_API()
+      }
     }
   }
 </script>
